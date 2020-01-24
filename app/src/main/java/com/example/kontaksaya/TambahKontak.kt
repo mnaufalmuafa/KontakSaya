@@ -14,16 +14,13 @@ class TambahKontak : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tambah_kontak)
-
-        ref = FirebaseDatabase.getInstance().getReference()
-
-
-
         BtnTambah.setOnClickListener {
             var Nama = ETNama.text
             var NoTelp = ETNomorTelepon.text
             Log.d("TAG","Nama : "+Nama)
             Log.d("TAG","No Telp : "+NoTelp)
+            ref = FirebaseDatabase.getInstance().getReference(Nama.toString())
+            ref.setValue(NoTelp.toString());
         }
     }
 }
