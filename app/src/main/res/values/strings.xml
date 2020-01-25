@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Kontak Saya</string>
+    <string name="Nama">Nama</string>
+    <string name="NoTelp">NoTelp</string>
 </resources>

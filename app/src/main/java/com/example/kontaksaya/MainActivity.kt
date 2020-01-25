@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var RV : RecyclerView
+    private val listKontak = ArrayList<Contact>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +33,6 @@ class MainActivity : AppCompatActivity() {
         RV.layoutManager = LinearLayoutManager(this)
 
         var dr : DatabaseReference = FirebaseDatabase.getInstance().getReference()
-        val listKontak = ArrayList<Contact>()
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 // Get Post object and use the values to update the UI
@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
                     val contact : Contact = item.getValue(Contact::class.java)!!
                     listKontak.add(contact)
                 }
-                val RVContactAdapter = RVContactAdapter(listKontak)
+                val RVContactAdapter = RVContactAdapter(listKontak,this@MainActivity)
                 RV.adapter = RVContactAdapter;
             }
 
@@ -55,32 +55,36 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onStart() {
-        Log.d("TAG","MainActivity OnCreate")
+        Log.d("TAG","MainActivity OnStart1")
         super.onStart()
-        Log.d("TAG","MainActivity OnCreate")
+        Log.d("TAG","MainActivity OnStart2")
     }
 
     override fun onResume() {
-        Log.d("TAG","MainActivity OnCreate")
+        Log.d("TAG","MainActivity OnResume1")
         super.onResume()
-        Log.d("TAG","MainActivity OnCreate")
+        Log.d("TAG","MainActivity OnResume2")
     }
 
     override fun onPause() {
-        Log.d("TAG","MainActivity OnCreate")
+        Log.d("TAG","MainActivity OnPause1")
         super.onPause()
-        Log.d("TAG","MainActivity OnCreate")
+        Log.d("TAG","MainActivity OnPause2")
+        while (listKontak.size > 0) {
+            listKontak.removeAt(0)
+        }
+
     }
 
     override fun onStop() {
-        Log.d("TAG","MainActivity OnCreate")
+        Log.d("TAG","MainActivity OnStop1")
         super.onStop()
-        Log.d("TAG","MainActivity OnCreate")
+        Log.d("TAG","MainActivity OnStop2")
     }
 
     override fun onDestroy() {
-        Log.d("TAG","MainActivity OnCreate")
+        Log.d("TAG","MainActivity OnDestroy1")
         super.onDestroy()
-        Log.d("TAG","MainActivity OnCreate")
+        Log.d("TAG","MainActivity OnDestroy2")
     }
 }
