@@ -20,7 +20,9 @@ class TambahKontak : AppCompatActivity() {
             Log.d("TAG","Nama : "+Nama)
             Log.d("TAG","No Telp : "+NoTelp)
             ref = FirebaseDatabase.getInstance().getReference(Nama.toString())
-            ref.setValue(NoTelp.toString());
+            var kontak : Contact = Contact(Nama.toString(),NoTelp.toString())
+            ref.setValue(kontak)
+            finish()
         }
     }
 }
