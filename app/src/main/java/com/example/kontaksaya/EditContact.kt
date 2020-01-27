@@ -28,18 +28,6 @@ class EditContact : AppCompatActivity() {
 
         BtnFixUbah.setOnClickListener {
             ref = FirebaseDatabase.getInstance().getReference()
-            val Listener = object : ValueEventListener {
-                override fun onCancelled(p0: DatabaseError) {
-                    Log.d("BUANG","BUANG")
-                    finish()
-                }
-
-                override fun onDataChange(p0: DataSnapshot) {
-                    Log.d("BUANG","BUANG")
-                    finish()
-                }
-
-            }
             val dataListener = object : ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
                     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -62,7 +50,6 @@ class EditContact : AppCompatActivity() {
                                 val toast = Toast.makeText(applicationContext, text, duration)
                                 toast.show()
                             }
-                            ref.addValueEventListener(Listener)
                         }
                         else {
                             var kontak : Contact = Contact(ETNama.text.toString(),ETNomorTelepon.text.toString())
@@ -71,7 +58,6 @@ class EditContact : AppCompatActivity() {
                             val returnIntent = Intent()
                             returnIntent.putExtra(getString(R.string.Result), ETNama.text.toString())
                             setResult(Activity.RESULT_OK, returnIntent)
-                            ref.addValueEventListener(Listener)
                         }
                         lanjut = false
                         finish()

@@ -6,11 +6,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_contact_detail.*
 import kotlinx.android.synthetic.main.item_kontak.TVNama
 
 
 class ContactDetail : AppCompatActivity() {
+
+    lateinit var ref : DatabaseReference
+    var lanjut : Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +42,20 @@ class ContactDetail : AppCompatActivity() {
                 //val result: String = attr.data.getStringExtra("result")
                 val result: String? = data?.getStringExtra("result")
                 Log.d("TAG","Nama setelah diubah : $result")
+                ref = FirebaseDatabase.getInstance().getReference()
+                val Listener = object : ValueEventListener {
+                    override fun onCancelled(p0: DatabaseError) {
+                        Log.d("BUANG","BUANG")
+                    }
+
+                    override fun onDataChange(p0: DataSnapshot) {
+                        Log.d("TAGA","Kesini dong")
+                        TVNama.setText(p0.child("${result}").child("nama").getValue(String::class.java))
+                        TVNoTelp.setText(p0.child("${result}").child("noTelp").getValue(String::class.java))
+                    }
+
+                }
+                ref.addValueEventListener(Listener)
             }
             if (resultCode == Activity.RESULT_CANCELED) {
                 //Write your code if there's no result

@@ -52,13 +52,16 @@ class MainActivity : AppCompatActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 // Get Post object and use the values to update the UI
                 //val post = dataSnapshot.getValue(Contact::class.java)
+                while (listKontak.size > 0) {
+                    listKontak.removeAt(0)
+                }
                 for (item : DataSnapshot in dataSnapshot.children) {
                     val contact : Contact = item.getValue(Contact::class.java)!!
                     listKontak.add(contact)
                 }
                 val RVContactAdapter = RVContactAdapter(listKontak,this@MainActivity)
                 RV.adapter = RVContactAdapter
-                dr.addValueEventListener(Listener)
+                dr.addListenerForSingleValueEvent(Listener)
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
