@@ -1,6 +1,7 @@
 package com.example.kontaksaya
 
 import android.content.Intent
+import android.net.sip.SipSession
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -32,7 +33,21 @@ class MainActivity : AppCompatActivity() {
     private fun showRecyclerList() {
         RV.layoutManager = LinearLayoutManager(this)
 
+        while (listKontak.size > 0) {
+            listKontak.removeAt(0)
+        }
+
         var dr : DatabaseReference = FirebaseDatabase.getInstance().getReference()
+        val Listener = object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                Log.d("BUANG","BUANG")
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                Log.d("BUANG","BUANG")
+            }
+
+        }
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 // Get Post object and use the values to update the UI
@@ -42,7 +57,8 @@ class MainActivity : AppCompatActivity() {
                     listKontak.add(contact)
                 }
                 val RVContactAdapter = RVContactAdapter(listKontak,this@MainActivity)
-                RV.adapter = RVContactAdapter;
+                RV.adapter = RVContactAdapter
+                dr.addValueEventListener(Listener)
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
